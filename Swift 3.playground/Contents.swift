@@ -159,3 +159,50 @@ serialQueue.async {
     //Get main queue asynchronously to update ui
     DispatchQueue.main.async {}
 }
+
+//Memory Management
+
+class Car {
+    var plate: String
+    weak var driver: Driver?
+    
+    init?(plate: String) {
+        self.plate = plate
+    }
+    
+    deinit {
+        print("Car deinit")
+    }
+}
+
+class Driver {
+    let name: String
+    var cars = [Car]()
+    
+    init?(name: String) {
+        self.name = name
+    }
+    
+    //lazy property
+    lazy var carNumberPlatesString: String = {
+        return self.cars.map {$0.plate}.joined(separator: ", ")
+    }()
+    
+    //lazy closure property
+    lazy var allPlates: () -> String = { [unowned self] in
+        return self.cars.map{ $0.plate}.joined(separator: ", ")
+    }
+    
+    deinit {
+        print("Driver deinit")
+    }
+}
+
+do {
+    let car = Car(plate: "abc")
+    let driver = Driver(name: "jack")
+    
+    car?.driver = driver
+    driver?.cars.append(car!)
+}
+
