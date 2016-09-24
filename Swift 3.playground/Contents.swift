@@ -214,7 +214,7 @@ do {
 //Closures in swift 3.0
 
 
-//Example1 - closure takes no parameter, return type is a string
+//Example1 - closure takes no parameter, return value is a string
 var hello: () -> String = {
     return "hello swift"
 }
@@ -222,7 +222,7 @@ hello()
 
 
 
-//Example2 -  closure takes 1 parameter, return type is an Int
+//Example2 -  closure takes 1 parameter, return value is an Int
 var double: (Int) -> Int = { value in
     return 2 * value
 }
@@ -235,7 +235,7 @@ anotherDouble(4)
 
 
 
-//Example4 - closure takes no parameter, return type is a function with no argument
+//Example4 - closure takes no parameter, no return value
 var printString: () -> () = {
     print("Print closure")
 }
@@ -243,14 +243,14 @@ printString()
 
 
 
-//Example5 - closure takes no parameter, return type is an Int
+//Example5 - closure takes no parameter, return value is an Int
 var getNumber: () -> Int = {
     return 100
 }
 getNumber()
 
 
-//Example6 - closure takes 1 parameter, return type is an Int
+//Example6 - closure takes 1 parameter, return value is an Int
 var mod: (Int) -> Int = { value in
     return value % 10
 }
@@ -258,7 +258,7 @@ mod(15)
 
 
 
-//Example7 - closure takes 2 parameter as String, return type is a String
+//Example7 - closure takes 2 parameter as String, return value is a String
 var concatString: (String, String) -> String = { (first: String, second: String) in
    return first + " " + second
 }
@@ -266,7 +266,7 @@ concatString("Hi", "There")
 
 
 
-//Example8 - closure takes 2 parameter as Int, return type is an Int
+//Example8 - closure takes 2 parameter as Int, return value is an Int
 var sum: (Int, Int) -> Int = {
     return $0 + $1
 }
@@ -283,7 +283,7 @@ func makeIterator(start: Int, step: Int) -> () -> Int {
     
     var index = start
     
-    //closure takes no parameter, return type is an Int
+    //closure takes no parameter, return value is an Int
     let incrementer: () -> Int = {
         let currentValue = index
         index += step
@@ -300,9 +300,11 @@ iterator()
 
 
 
-//Example9 - function takes one parameter, return type is a closure(1 parameter, return type is Int)
+//Example9 - function takes one parameter, return value is a closure
+
 func makeMultiplier(multiplier: Int) -> (Int) -> Int {
     
+    //closure takes 1 Int parameter, return type is an Int
     let closure: (Int) -> Int = { (input: Int) in
         return input * multiplier
     }
@@ -317,14 +319,15 @@ tripler(10)
 
 
 
-//Example10 - func takes 2 Int parameters and a closure, return type is an Int
+//Example10 - func takes 2 Int parameters and a closure, return value is an Int
 //closure takes 1 Int parameter and return type is an Int
 
 func getSum(from: Int, to: Int, closure: (Int) -> Int) -> Int {
+    
     var sum = 0
     
-    for i in from...to {
-        sum += closure(i)
+    for index in from...to {
+        sum += closure(index)
     }
     return sum
 }
