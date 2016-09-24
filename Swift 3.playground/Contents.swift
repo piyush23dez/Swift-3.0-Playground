@@ -183,7 +183,7 @@ class Driver {
         self.name = name
     }
     
-    //lazy property
+    //lazy stored property
     lazy var carNumberPlatesString: String = {
         return self.cars.map {$0.plate}.joined(separator: ", ")
     }()
@@ -204,12 +204,17 @@ do {
     
     car?.driver = driver
     driver?.cars.append(car!)
+    print(driver?.allPlates())
 }
 
-//Closures
 
 
-//Example1
+
+
+//Closures in swift 3.0
+
+
+//Example1 - No input parameter, return type is string
 var hello: () -> String = {
     return "hello swift"
 }
@@ -217,21 +222,20 @@ hello()
 
 
 
-//Example2
+//Example2 -  1 input parameter, return type is Int
 var double: (Int) -> Int = { value in
     return 2 * value
 }
-double(5)
+double(2)
 
 
-
-//Example3
+//Example3 - assign closure to another variable
 let anotherDouble = double
 anotherDouble(4)
 
 
 
-//Example4
+//Example4 - no input, return type is a function with no argument
 var printString: () -> () = {
     print("Print closure")
 }
@@ -239,22 +243,22 @@ printString()
 
 
 
-//Example5
+//Example5 - no input, return type is an Int
 var getNumber: () -> Int = {
     return 100
 }
+getNumber()
 
 
-
-//Example6
+//Example6 - 1 input, return type is an Int
 var mod: (Int) -> Int = { value in
-    return value%10
+    return value % 10
 }
 mod(15)
 
 
 
-//Example7
+//Example7- 2 input string arguments, return type is an String
 var concatString: (String, String) -> String = { (first: String, second: String) in
    return first + " " + second
 }
@@ -262,16 +266,7 @@ concatString("Hi", "There")
 
 
 
-//Example8
-var doubleValue: (Int) -> Int = {
-   return $0 * 2
-}
-doubleValue(2)
-
-
-
-
-//Example9
+//Example8 - 2 input, return type is an Int
 var sum: (Int, Int) -> Int = {
     return $0 + $1
 }
@@ -283,7 +278,7 @@ sum(1, 1)
 /* a closure can remember the reference of a variable or constant from its context and
 use it when it’s called. closure captures a variable that is not in the global context */
 
-//Example10
+//Example8
 func makeIterator(start: Int, step: Int) -> () -> Int {
     
     var index = start
@@ -304,7 +299,7 @@ iterator()
 
 
 
-//Example11
+//Example9 - 1 input, return type is a closure(1 input is Int, return type is Int)
 func makeMultiplier(multiplier: Int) -> (Int) -> Int {
     
     let closure: (Int) -> Int = { (input: Int) in
@@ -321,22 +316,12 @@ tripler(10)
 
 
 
-
-//Example12
-let incrementor: (Int) -> Int = { input in
-    return input+1
-}
-incrementor(10)
-
-
-
-
-//Example13
-func getSum(from: Int, to: Int, function: (Int) -> Int) -> Int {
+//Example10 - 2 Int input, third input is a closure, return type is an Int
+func getSum(from: Int, to: Int, closure: (Int) -> Int) -> Int {
     var sum = 0
     
     for i in from...to {
-        sum += function(i)
+        sum += closure(i)
     }
     return sum
 }
@@ -344,6 +329,7 @@ let total = getSum(from: 1, to: 5) { $0 }
 print(total)
 
 
+//Example11
 
 /* Write a function named applyKTimes that takes an integer K and a closure and calls the
    closure K times. The closure will not take any parameters and will not have a return 
@@ -352,20 +338,23 @@ print(total)
 */
 
 func applyKTimes(k: Int, closure: () -> ()) {
-    closure()
+    
+    for _ in 1...k {
+        closure()
+    }
 }
 
 applyKTimes(k: 5) {
-    print("piyush")
+    print("Printing 5 times")
 }
 
 
-/* Find the largest number using reduce 
-   Hint: choose initial value for reduce function
-*/
+//Example12
 
-let allNumbers = [4, 7, 1, 9, 6, 5, 6, 9]
-let max = allNumbers.reduce(allNumbers[0]) {
+/* Find the largest number using reduce with or without max func of swift */
+
+let allNumbers = [4, 7, 1, 11, 6, 5, 6]
+let maxValue = allNumbers.reduce(0) {
     
     if $0 > $1 {
         return $0
@@ -374,8 +363,13 @@ let max = allNumbers.reduce(allNumbers[0]) {
         return $1
     }
 }
-max
+maxValue
 
+let maxNum = allNumbers.reduce(0, max)
+maxNum
+
+
+//Example13
 
 /* Join all the strings from strings into one using reduce. Add spaces in between 
    strings. Print your result.
@@ -397,14 +391,15 @@ totalString
 
 
 
-//Example19
+//Example14 - sort array in ascending order by number of divisors for each value
 var someArray = [1, 2, 3, 4, 5, 6]
 
+//sort in place
 someArray.sort { x, y in
     
     func countDivisors(number: Int) -> Int {
         var count = 0
-        for index in 1...number where number%index == 0 {
+        for index in 1...number where number % index == 0 {
             count += 1
         }
         return count
@@ -417,7 +412,8 @@ print(someArray)
 
 
 
-//Example20
+//Example15
+
 var numbersArr = [1, 2, 3, 4, 5, 6]
 /*  Find the sum of the squares of all the odd numbers from numbers and then print it. Use map, filter and reduce to solve this problem.
 */
@@ -426,29 +422,38 @@ let sumOfNumbs = numbersArr.filter { $0 % 2 == 1 }.map { $0 * $0 }.reduce(0, +)
 
 
 
+//Example16
 
 /* Implement a function forEach(array: [Int], _ closure: Int -> ()) that takes an array
    of integers and a closure and runs the closure for each element of the array.
 */
 
 func forEach(array: [Int], closure: (Int) -> ()) {
+    
     for number in array {
         closure(number)
     }
 }
 
 forEach(array: [1,2,3,4,5]) { (value) in
-   print(value)
+   print(value * value)
 }
+
+
+
+
+//Example17
 
 /*
  Implement a function combineArrays that takes 2 arrays and a closure that combines 2 
- Ints into a single Int. The function combines the two arrays into a single array using 
+ Ints into a single Int. 
+ 
+ The function combines the two arrays into a single array using
  the provided closure. Assume that the 2 arrays have equal length.
 */
 
-
-func combine(array1: [Int], array2: [Int], closure: (Int, Int) -> (Int)) -> [Int] {
+func combine(array1: [Int], array2: [Int], closure: (Int, Int) -> Int) -> [Int] {
+    
     var result = [Int]()
     
     for i in 0..<array1.count {
@@ -457,9 +462,9 @@ func combine(array1: [Int], array2: [Int], closure: (Int, Int) -> (Int)) -> [Int
     return result
 }
 
-let array1 = [1,2,3]
-let array2 = [4,5,6]
+let arr1 = [1,2,3]
+let arr2 = [4,5,6]
 
-combine(array1: array1, array2: array2) { (value1, value2) -> (Int) in
-    return value1 + value2
+combine(array1: arr1, array2: arr2) { (value1, value2) -> Int in
+    return value1 * value2
 }
