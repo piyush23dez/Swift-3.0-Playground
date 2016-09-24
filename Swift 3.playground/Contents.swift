@@ -317,9 +317,8 @@ tripler(10)
 
 
 
-//Example10 - functoin takes 2 Int parameters
-//last parameter is a closure(takes 1 parameter as Int, return type is an Int)
-//function return type is an Int
+//Example10 - func takes 2 Int parameters and a closure, return type is an Int
+//closure takes 1 Int parameter and return type is an Int
 
 func getSum(from: Int, to: Int, closure: (Int) -> Int) -> Int {
     var sum = 0
