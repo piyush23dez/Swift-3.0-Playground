@@ -280,7 +280,7 @@ sum(1, 1)
 
 
 
-/* So a closure can remember the reference of a variable or constant from its context and
+/* a closure can remember the reference of a variable or constant from its context and
 use it when it’s called. closure captures a variable that is not in the global context */
 
 //Example10
@@ -412,3 +412,54 @@ someArray.sort { x, y in
     return countDivisors(number: x) < countDivisors(number: y)
 }
 print(someArray)
+
+
+
+
+
+//Example20
+var numbersArr = [1, 2, 3, 4, 5, 6]
+/*  Find the sum of the squares of all the odd numbers from numbers and then print it. Use map, filter and reduce to solve this problem.
+*/
+let sumOfNumbs = numbersArr.filter { $0 % 2 == 1 }.map { $0 * $0 }.reduce(0, +)
+
+
+
+
+
+/* Implement a function forEach(array: [Int], _ closure: Int -> ()) that takes an array
+   of integers and a closure and runs the closure for each element of the array.
+*/
+
+func forEach(array: [Int], closure: (Int) -> ()) {
+    for number in array {
+        closure(number)
+    }
+}
+
+forEach(array: [1,2,3,4,5]) { (value) in
+   print(value)
+}
+
+/*
+ Implement a function combineArrays that takes 2 arrays and a closure that combines 2 
+ Ints into a single Int. The function combines the two arrays into a single array using 
+ the provided closure. Assume that the 2 arrays have equal length.
+*/
+
+
+func combine(array1: [Int], array2: [Int], closure: (Int, Int) -> (Int)) -> [Int] {
+    var result = [Int]()
+    
+    for i in 0..<array1.count {
+        result.append(closure(array1[i], array2[i]))
+    }
+    return result
+}
+
+let array1 = [1,2,3]
+let array2 = [4,5,6]
+
+combine(array1: array1, array2: array2) { (value1, value2) -> (Int) in
+    return value1 + value2
+}
