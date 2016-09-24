@@ -206,3 +206,209 @@ do {
     driver?.cars.append(car!)
 }
 
+//Closures
+
+
+//Example1
+var hello: () -> String = {
+    return "hello swift"
+}
+hello()
+
+
+
+//Example2
+var double: (Int) -> Int = { value in
+    return 2 * value
+}
+double(5)
+
+
+
+//Example3
+let anotherDouble = double
+anotherDouble(4)
+
+
+
+//Example4
+var printString: () -> () = {
+    print("Print closure")
+}
+printString()
+
+
+
+//Example5
+var getNumber: () -> Int = {
+    return 100
+}
+
+
+
+//Example6
+var mod: (Int) -> Int = { value in
+    return value%10
+}
+mod(15)
+
+
+
+//Example7
+var concatString: (String, String) -> String = { (first: String, second: String) in
+   return first + " " + second
+}
+concatString("Hi", "There")
+
+
+
+//Example8
+var doubleValue: (Int) -> Int = {
+   return $0 * 2
+}
+doubleValue(2)
+
+
+
+
+//Example9
+var sum: (Int, Int) -> Int = {
+    return $0 + $1
+}
+sum(1, 1)
+
+
+
+
+/* So a closure can remember the reference of a variable or constant from its context and
+use it when it’s called. closure captures a variable that is not in the global context */
+
+//Example10
+func makeIterator(start: Int, step: Int) -> () -> Int {
+    
+    var index = start
+    
+    let incrementer: () -> Int = {
+        let currentValue = index
+        index += step
+        return currentValue
+    }
+    return incrementer
+}
+
+var iterator = makeIterator(start: 1, step: 1)
+iterator()
+iterator()
+iterator()
+
+
+
+
+//Example11
+func makeMultiplier(multiplier: Int) -> (Int) -> Int {
+    
+    let closure: (Int) -> Int = { (input: Int) in
+        return input * multiplier
+    }
+    return closure
+}
+
+let doubler = makeMultiplier(multiplier: 2)
+doubler(10)
+
+let tripler = makeMultiplier(multiplier: 3)
+tripler(10)
+
+
+
+
+//Example12
+let incrementor: (Int) -> Int = { input in
+    return input+1
+}
+incrementor(10)
+
+
+
+
+//Example13
+func getSum(from: Int, to: Int, function: (Int) -> Int) -> Int {
+    var sum = 0
+    
+    for i in from...to {
+        sum += function(i)
+    }
+    return sum
+}
+let total = getSum(from: 1, to: 5) { $0 }
+print(total)
+
+
+
+/* Write a function named applyKTimes that takes an integer K and a closure and calls the
+   closure K times. The closure will not take any parameters and will not have a return 
+   value.
+   Hint: Remember a closure is just like a regular function.
+*/
+
+func applyKTimes(k: Int, closure: () -> ()) {
+    closure()
+}
+
+applyKTimes(k: 5) {
+    print("piyush")
+}
+
+
+/* Find the largest number using reduce 
+   Hint: choose initial value for reduce function
+*/
+
+let allNumbers = [4, 7, 1, 9, 6, 5, 6, 9]
+let max = allNumbers.reduce(allNumbers[0]) {
+    
+    if $0 > $1 {
+        return $0
+    }
+    else {
+        return $1
+    }
+}
+max
+
+
+/* Join all the strings from strings into one using reduce. Add spaces in between 
+   strings. Print your result.
+*/
+
+let strArray = ["Hi", "There"]
+let totalString = strArray.reduce("") {
+    
+    //if array contains only one string
+    if $0 == "" {
+        return $1
+    }
+    else {
+        return $0 + " " + $1
+    }
+}
+totalString
+
+
+
+
+//Example19
+var someArray = [1, 2, 3, 4, 5, 6]
+
+someArray.sort { x, y in
+    
+    func countDivisors(number: Int) -> Int {
+        var count = 0
+        for index in 1...number where number%index == 0 {
+            count += 1
+        }
+        return count
+    }
+    return countDivisors(number: x) < countDivisors(number: y)
+}
+print(someArray)
