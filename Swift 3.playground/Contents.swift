@@ -385,14 +385,26 @@ let strArray = ["Hi", "There"]
 let totalString = strArray.reduce("") {
     
     //if array contains only one string
-    if $0 == "" {
+    if $0.isEmpty {
         return $1
     }
     else {
         return $0 + " " + $1
     }
 }
+
 totalString
+
+let newString = strArray.reduce("") { text, name in
+    
+    if text.isEmpty {
+        return name
+    }
+    else {
+        return "\(text) , \(name)"
+    }
+}
+newString
 
 
 
@@ -474,3 +486,20 @@ let arr2 = [4,5,6]
 combine(array1: arr1, array2: arr2) { (value1, value2) -> Int in
     return value1 * value2
 }
+
+
+//Example 18
+
+let collections = [[5,2,7],[4,8],[9,1,3]]
+let flat = collections.flatMap { $0 }
+flat
+
+let onlyEven = collections.flatMap {
+    $0.filter { $0 % 2 == 0 }
+}
+onlyEven
+
+
+let numbers = [20,17,35,4,12]
+let evenSquares = numbers.map { $0 * $0 } .filter { $0 % 2 == 0 }
+evenSquares
