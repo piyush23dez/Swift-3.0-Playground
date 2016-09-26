@@ -120,162 +120,6 @@ for index in 1...5 {
 }
 
 
-//GCD
-
-//Network operation
-func fetchData() {}
-
-//Create a concurrent queue
-let concurrentQueue = DispatchQueue(label: "concurrent", qos: .background, attributes: .concurrent)
-
-//Perform concurrent operation asynchronously
-concurrentQueue.async {
-   
-    //Background operation
-    fetchData()
-    
-    //Get main queue asynchronously to update ui
-    DispatchQueue.main.async {}
-}
-
-//Create a global queue
-let globalQueue = DispatchQueue.global(qos: .background)
-
-//Perform concurrent operation asynchronously
-globalQueue.async {
-    
-    //Background operation
-    fetchData()
-    
-    //Get main queue asynchronously to update ui
-    DispatchQueue.main.async {}
-}
-
-//Create a serial queue
-let serialQueue = DispatchQueue(label: "serial")
-
-//Perform serial operation asynchronously
-serialQueue.async {
-    
-    //Background operation
-    fetchData()
-    
-    //Get main queue asynchronously to update ui
-    DispatchQueue.main.async {}
-}
-
-
-
-
-
-
-
-//OperationQueue using block
-
-var queue = OperationQueue()
-
-//Perform task in operation queue asynchronously or concurrently
-queue.addOperation {
-    
-    //Background operation
-    fetchData()
-    
-    //Get main queue asynchronously to update ui
-    OperationQueue.main.addOperation {
-      // Perform ui changes
-    }
-}
-
-
-//OperationQueue using BlockOPeration class
-
-let anotherQueue = OperationQueue()
-
-
-let blockOperation1 = BlockOperation { 
-    
-    //Background operation
-    fetchData()
-    
-    OperationQueue.main.addOperation {
-        //perform ui changes
-    }
-}
-
-blockOperation1.completionBlock = {
-    print("Operatoion 1 completed")
-}
-
-
-
-let blockOperation2 = BlockOperation {
-    
-    //Background operation
-    fetchData()
-    
-    OperationQueue.main.addOperation {
-        //perform ui changes
-    }
-}
-
-blockOperation2.completionBlock = {
-    print("Operatoion 2 completed")
-}
-
-blockOperation2.addDependency(blockOperation1)
-anotherQueue.addOperations([blockOperation1,blockOperation2], waitUntilFinished: true)
-
-
-
-
-
-//Memory Management
-
-class Car {
-    var plate: String
-    weak var driver: Driver?
-    
-    init?(plate: String) {
-        self.plate = plate
-    }
-    
-    deinit {
-        print("Car deinit")
-    }
-}
-
-class Driver {
-    let name: String
-    var cars = [Car]()
-    
-    init?(name: String) {
-        self.name = name
-    }
-    
-    //lazy stored property
-    lazy var carNumberPlatesString: String = {
-        return self.cars.map {$0.plate}.joined(separator: ", ")
-    }()
-    
-    //lazy closure property
-    lazy var allPlates: () -> String = { [unowned self] in
-        return self.cars.map{ $0.plate}.joined(separator: ", ")
-    }
-    
-    deinit {
-        print("Driver deinit")
-    }
-}
-
-do {
-    let car = Car(plate: "abc")
-    let driver = Driver(name: "jack")
-    
-    car?.driver = driver
-    driver?.cars.append(car!)
-    print(driver?.allPlates())
-}
-
 
 
 
@@ -572,3 +416,192 @@ onlyEven
 let numbers = [20,17,35,4,12]
 let evenSquares = numbers.map { $0 * $0 } .filter { $0 % 2 == 0 }
 evenSquares
+
+
+
+
+
+
+/*---------------------------------------------------*/
+
+//Memory Management
+
+class Car {
+    var plate: String
+    weak var driver: Driver?
+    
+    init?(plate: String) {
+        self.plate = plate
+    }
+    
+    deinit {
+        print("Car deinit")
+    }
+}
+
+class Driver {
+    let name: String
+    var cars = [Car]()
+    
+    init?(name: String) {
+        self.name = name
+    }
+    
+    //lazy stored property
+    lazy var carNumberPlatesString: String = {
+        return self.cars.map {$0.plate}.joined(separator: ", ")
+    }()
+    
+    //lazy closure property
+    lazy var allPlates: () -> String = { [unowned self] in
+        return self.cars.map{ $0.plate}.joined(separator: ", ")
+    }
+    
+    deinit {
+        print("Driver deinit")
+    }
+}
+
+do {
+    let car = Car(plate: "abc")
+    let driver = Driver(name: "jack")
+    
+    car?.driver = driver
+    driver?.cars.append(car!)
+    print(driver?.allPlates())
+}
+/*---------------------------------------------------*/
+
+
+
+
+
+
+//GCD
+
+//Network operation
+func fetchData() {}
+
+/*---------------------------------------------------*/
+
+//Create a concurrent queue
+let concurrentQueue = DispatchQueue(label: "concurrent", qos: .background, attributes: .concurrent)
+
+//Perform concurrent operation asynchronously
+concurrentQueue.async {
+    
+    //Background operation
+    fetchData()
+    
+    //Get main queue asynchronously to update ui
+    DispatchQueue.main.async {}
+}
+
+/*---------------------------------------------------*/
+
+//Create a global queue
+let globalQueue = DispatchQueue.global(qos: .background)
+
+//Perform concurrent operation asynchronously
+globalQueue.async {
+    
+    //Background operation
+    fetchData()
+    
+    //Get main queue asynchronously to update ui
+    DispatchQueue.main.async {}
+}
+
+
+/*---------------------------------------------------*/
+
+//Create a serial queue
+let serialQueue = DispatchQueue(label: "serial")
+
+//Perform serial operation asynchronously
+serialQueue.async {
+    
+    //Background operation
+    fetchData()
+    
+    //Get main queue asynchronously to update ui
+    DispatchQueue.main.async {}
+}
+
+/*---------------------------------------------------*/
+
+
+
+//OperationQueue using block
+
+var queue = OperationQueue()
+
+//Perform task in operation queue asynchronously or concurrently
+queue.addOperation {
+    
+    //Background operation
+    fetchData()
+    
+    //Get main queue asynchronously to update ui
+    OperationQueue.main.addOperation {
+        // Perform ui changes
+    }
+}
+
+/*---------------------------------------------------*/
+
+
+//OperationQueue using BlockOperation
+
+let anotherQueue = OperationQueue()
+
+let blockOperation1 = BlockOperation {
+    
+    //Background operation
+    fetchData()
+    
+    OperationQueue.main.addOperation {
+        //perform ui changes
+    }
+}
+
+blockOperation1.completionBlock = {
+    print("Operatoion 1 completed")
+}
+
+
+let blockOperation2 = BlockOperation {
+    
+    //Background operation
+    fetchData()
+    
+    OperationQueue.main.addOperation {
+        //perform ui changes
+    }
+}
+
+blockOperation2.completionBlock = {
+    print("Operatoion 2 completed")
+}
+
+blockOperation1.addDependency(blockOperation2)
+anotherQueue.addOperations([blockOperation1,blockOperation2], waitUntilFinished: true)
+
+
+/*---------------------------------------------------*/
+
+
+
+
+//Swift – Creating Custom Operation class
+
+
+
+
+
+
+
+
+
+
+
