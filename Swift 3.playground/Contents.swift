@@ -609,8 +609,18 @@ func read() {
  }
 }
 
+/*---------------------------------------------------*/
 
 
+//Swift – Json serialization
+
+func getJson() -> [String : Any] {
+ let jsonString = "some json string from server"
+ 
+ let data = jsonString.data(using: .utf8)!
+ let json = try ? JSONSerialization.jsonObject(with: data)
+ return json
+}
 
 
 
