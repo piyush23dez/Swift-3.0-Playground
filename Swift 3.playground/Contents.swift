@@ -593,7 +593,21 @@ anotherQueue.addOperations([blockOperation1,blockOperation2], waitUntilFinished:
 
 
 
-//Swift – Creating Custom Operation class
+//Swift – Reading files from disk
+
+func read() {
+ if let fileName = Bundle.main.path(forResource: "urls", ofType: "plist") {
+   do {
+     let contents = try Dictionary(contentsOfFile: filePath)
+   }
+  catch let error {
+    print("contents could not be loaded: \(error)")
+  }
+ }
+ else {
+  print("Fil not found")
+ }
+}
 
 
 
