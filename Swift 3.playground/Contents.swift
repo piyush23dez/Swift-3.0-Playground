@@ -609,6 +609,27 @@ func read() {
  }
 }
 
+//Swift – Writing files to disk
+
+func write(data: String) {
+ let path = getDocumentDirectoryPath("file.txt")
+  do {
+   try data.write(to: path, atomically: false, encoding: String.encoding.utf8)
+  }
+  catch let error {
+   print("error in writing data to disk")
+  }
+}
+
+func getDocumentDirectoryPath(fileName: String) -> String {
+ let dir = FileManager.default.urls(for. documentDirectory, in .userDomainMask)
+ let path = dir.appendingPathComponent(fileName)
+ return path
+}
+ 
+
+
+
 /*---------------------------------------------------*/
 
 
