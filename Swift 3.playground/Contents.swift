@@ -475,9 +475,9 @@ do {
 //Swift – Reading files from disk
 
 func read() {
- if let urls = Bundle.main.path(forResource: "urls", ofType: "plist") {
+ if let filePath = Bundle.main.path(forResource: "urls", ofType: "plist") {
    do {
-     let contents = try Dictionary(contentsOfFile: urls)
+     let contents = try Dictionary(contentsOfFile: filePath)
    }
   catch let error {
     print("contents could not be loaded: \(error)")
