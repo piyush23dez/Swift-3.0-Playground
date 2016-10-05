@@ -491,7 +491,7 @@ func read() {
 //Swift – Writing files to disk
 
 func write(data: Dicionary) {
- let path = getDocumentDirectoryPath("urls.plist")
+ let path = getDocumentDirectoryPath(fileName: "urls.plist")
   do {
    try data.write(to: path, atomically: false, encoding: String.encoding.utf8)
   }
@@ -506,8 +506,6 @@ func getDocumentDirectoryPath(fileName: String) -> String {
  return path
 }
  
-
-
 
 /*---------------------------------------------------*/
 
