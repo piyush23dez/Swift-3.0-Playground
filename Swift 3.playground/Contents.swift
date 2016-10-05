@@ -501,7 +501,7 @@ func write(data: Dicionary) {
 }
 
 func getDocumentDirectoryPath(fileName: String) -> String {
- let dir = FileManager.default.urls(for. documentDirectory, in .userDomainMask).first
+ let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
  let path = dir.appendingPathComponent(fileName)
  return path
 }
