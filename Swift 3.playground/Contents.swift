@@ -421,7 +421,6 @@ evenSquares
 
 
 
-
 /*---------------------------------------------------*/
 
 //Memory Management
@@ -471,126 +470,6 @@ do {
     print(driver?.allPlates())
 }
 /*---------------------------------------------------*/
-
-
-
-
-
-
-//GCD
-
-//Network operation
-func fetchData() {}
-
-/*---------------------------------------------------*/
-
-//Create a concurrent queue
-let concurrentQueue = DispatchQueue(label: "concurrent", qos: .background, attributes: .concurrent)
-
-//Perform concurrent operation asynchronously
-concurrentQueue.async {
-    
-    //Background operation
-    fetchData()
-    
-    //Get main queue asynchronously to update ui
-    DispatchQueue.main.async {}
-}
-
-/*---------------------------------------------------*/
-
-//Create a global queue
-let globalQueue = DispatchQueue.global(qos: .background)
-
-//Perform concurrent operation asynchronously
-globalQueue.async {
-    
-    //Background operation
-    fetchData()
-    
-    //Get main queue asynchronously to update ui
-    DispatchQueue.main.async {}
-}
-
-
-/*---------------------------------------------------*/
-
-//Create a serial queue
-let serialQueue = DispatchQueue(label: "serial")
-
-//Perform serial operation asynchronously
-serialQueue.async {
-    
-    //Background operation
-    fetchData()
-    
-    //Get main queue asynchronously to update ui
-    DispatchQueue.main.async {}
-}
-
-/*---------------------------------------------------*/
-
-
-
-//OperationQueue using block
-
-var queue = OperationQueue()
-
-//Perform task in operation queue asynchronously or concurrently
-queue.addOperation {
-    
-    //Background operation
-    fetchData()
-    
-    //Get main queue asynchronously to update ui
-    OperationQueue.main.addOperation {
-        // Perform ui changes
-    }
-}
-
-/*---------------------------------------------------*/
-
-
-//OperationQueue using BlockOperation
-
-let anotherQueue = OperationQueue()
-
-let blockOperation1 = BlockOperation {
-    
-    //Background operation
-    fetchData()
-    
-    OperationQueue.main.addOperation {
-        //perform ui changes
-    }
-}
-
-blockOperation1.completionBlock = {
-    print("Operatoion 1 completed")
-}
-
-
-let blockOperation2 = BlockOperation {
-    
-    //Background operation
-    fetchData()
-    
-    OperationQueue.main.addOperation {
-        //perform ui changes
-    }
-}
-
-blockOperation2.completionBlock = {
-    print("Operatoion 2 completed")
-}
-
-blockOperation1.addDependency(blockOperation2)
-anotherQueue.addOperations([blockOperation1,blockOperation2], waitUntilFinished: true)
-
-
-/*---------------------------------------------------*/
-
-
 
 
 //Swift – Reading files from disk
