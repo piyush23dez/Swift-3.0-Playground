@@ -472,40 +472,31 @@ do {
 /*---------------------------------------------------*/
 
 
-//Swift – Reading files from disk
-
 func read() {
- if let filePath = Bundle.main.path(forResource: "urls", ofType: "plist") {
-   do {
-     let contents = try Dictionary(contentsOfFile: filePath)
-   }
-  catch let error {
-    print("contents could not be loaded: \(error)")
-  }
- }
- else {
-  print("Fil not found")
- }
+    
+    if let filePath = Bundle.main.path(forResource: "urls", ofType: "plist") {
+        
+        do {
+            let content = try? Dictionary(contentsOf: filePath)
+        }
+        catch let error {
+            print(error)
+        }
+    }
 }
 
-//Swift – Writing files to disk
-
-func write(data: Dicionary) {
- let path = getDocumentDirectoryPath(fileName: "urls.plist")
-  do {
-   try data.write(to: path, atomically: false, encoding: String.encoding.utf8)
-  }
-  catch let error {
-   print("error in writing data to disk")
-  }
-}
-
-func getDocumentDirectoryPath(fileName: String) -> String {
- let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
- let path = dir.appendingPathComponent(fileName)
- return path
-}
- 
+func write(data: Dictionary, fileName: String) {
+    
+    let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+    let filePath = dir.appendingPathComponent(fileName)
+    
+    do {
+        try? data.write(to: filePath, automatically: true, encoding: String.encoding.utf8)
+    }
+    catch let error {
+        print(error)
+    }
+} 
 
 /*---------------------------------------------------*/
 
