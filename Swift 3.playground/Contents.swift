@@ -475,11 +475,9 @@ do {
 func read() {
     
     if let filePath = Bundle.main.path(forResource: "urls", ofType: "plist") {
-        // let data = FileManager.default.contents(atPath: filePath)
-        // let dict = try? JSONSerialization.jsonObject(with: data!)
-
         do {
-            let content = try? Dictionary(contentsOf: filePath)
+          let data = FileManager.default.contents(atPath: filePath)
+          let dict = try JSONSerialization.jsonObject(with: data!)
         }
         catch let error {
             print(error)
