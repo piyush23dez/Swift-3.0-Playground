@@ -478,7 +478,7 @@ func read(fileName: String) {
     let filePath = dir.appendingPathComponent(fileName)       
     
     do {
-      let data = try FileManager.default.contents(atPath: filePath)
+      let data = FileManager.default.contents(atPath: filePath)
       let dict = try JSONSerialization.jsonObject(with: data!)
     }
     catch let error {
@@ -504,7 +504,7 @@ func save(serverUrl: URL) {
     let filePath = dir.appendingPathComponent("somename.pdf")
  
    do {
-     try FileManager.default.copyItem(at: serverUrl, to: filePath)
+     try FileManager.default.copyItem(at: serverUrl, to: "\(filePath)")
    }
    catch let error {
     print(error)
