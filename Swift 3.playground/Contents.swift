@@ -472,22 +472,23 @@ do {
 /*---------------------------------------------------*/
 
 
-func read() {
+func read(fileName: String) {
     
-    if let filePath = Bundle.main.path(forResource: "urls", ofType: "plist") {
-        do {
-          let data = FileManager.default.contents(atPath: filePath)
-          let dict = try JSONSerialization.jsonObject(with: data!)
-        }
-        catch let error {
-            print(error)
-        }
+    let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+    let filePath = dir.appendingPathComponent(fileName)       
+    
+    do {
+      let data = try FileManager.default.contents(atPath: filePath)
+      let dict = try JSONSerialization.jsonObject(with: data!)
+    }
+    catch let error {
+     print(error)
     }
 }
 
 func write(data: Dictionary, fileName: String) {
     
-    let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+    let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
     let filePath = dir.appendingPathComponent(fileName)
     
     do {
@@ -497,6 +498,18 @@ func write(data: Dictionary, fileName: String) {
         print(error)
     }
 } 
+
+func save(serverUrl: URL) {
+    let dir = FileManager.default.urls(for: .docuementDirectory, in: .userDomainMask).first
+    let filePath = dir.appendingPathComponent("somename.pdf")
+ 
+   do {
+     try FileManager.default.copyItem(at: serverUrl, to: filePath)
+   }
+   catch let error {
+    print(error)
+   }
+}
 
 /*---------------------------------------------------*/
 
