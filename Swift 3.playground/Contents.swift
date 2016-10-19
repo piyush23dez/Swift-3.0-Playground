@@ -472,6 +472,7 @@ do {
 
 /*---------------------------------------------------*/
 
+//Read, write and copy files
 
 func read(fileName: String) {
     
@@ -500,7 +501,7 @@ func write(data: Dictionary, fileName: String) {
     }
 } 
 
-func save(serverUrl: URL) {
+func copy(serverUrl: URL) {
     let dir = FileManager.default.urls(for: .docuementDirectory, in: .userDomainMask).first
     let filePath = dir.appendingPathComponent("somename.pdf")
  
@@ -526,6 +527,9 @@ func getJson() -> [String : Any] {
 }
 
 /*---------------------------------------------------------------*/
+
+
+//Archving and UnArchiving data
 
 class Person: NSObject, NSCoding {
     var name: String?
