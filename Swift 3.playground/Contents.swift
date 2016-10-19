@@ -469,6 +469,7 @@ do {
     driver?.cars.append(car!)
     print(driver?.allPlates())
 }
+
 /*---------------------------------------------------*/
 
 
@@ -524,8 +525,49 @@ func getJson() -> [String : Any] {
  return json
 }
 
+/*---------------------------------------------------------------*/
 
+class Person: NSObject, NSCoding {
+    var name: String?
+    var age: Int?
+    
+    required init(name: String, age: Int) {
+        self.name = name
+        self.age = age
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        self.name = aDecoder.decodeObject(forKey: "name") as? String
+        self.age = aDecoder.decodeObject(forKey: "age") as? Int
+    }
+    
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(name, forKey: "name")
+        aCoder.encode(age, forKey: "age")
+    }
+}
 
+class Manager {
+    let person = Person(name: "person", age: 20)
+    var people = [Person]()
+    
+    func addPersons(person: Person) {
+        people.append(person)
+    }
+    
+    func save() {
+        let encodedData = NSKeyedArchiver.archivedData(withRootObject: people)
+        UserDefaults.standard.set(encodedData, forKey: "people")
+    }
+    
+    func read() -> [Person] {
+        if let data = UserDefaults.standard.data(forKey: "people") {
+            let people = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Person]
+            return people!
+        }
+        return []
+    }
+}
 
 
 
