@@ -559,16 +559,14 @@ class Manager {
     class Employee: NSObject, NSCopying {
     var firstName: String
     var lastName: String
-    var age: Int
 
-    init(firstName: String, lastName: String, age: Int) {
+    init(firstName: String, lastName: String) {
         self.firstName = firstName
         self.lastName = lastName
-        self.age = age
     }
 
     func copy(with zone: NSZone? = nil) -> Any {
-        let copy = Employee(firstName: firstName, lastName: lastName, age: age)
+        let copy = Employee(firstName: firstName, lastName: lastName)
         return copy
     }
 }
