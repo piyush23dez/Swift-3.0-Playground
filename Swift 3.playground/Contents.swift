@@ -573,7 +573,23 @@ class Manager {
     }
 }
 
+//Deep Copy
+    class Employee: NSObject, NSCopying {
+    var firstName: String
+    var lastName: String
+    var age: Int
 
+    init(firstName: String, lastName: String, age: Int) {
+        self.firstName = firstName
+        self.lastName = lastName
+        self.age = age
+    }
+
+    func copy(with zone: NSZone? = nil) -> Any {
+        let copy = Employee(firstName: firstName, lastName: lastName, age: age)
+        return copy
+    }
+}
 
 
 
