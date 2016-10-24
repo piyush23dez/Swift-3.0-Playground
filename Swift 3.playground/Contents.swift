@@ -274,13 +274,7 @@ applyKTimes(k: 5) {
 
 let allNumbers = [4, 7, 1, 11, 6, 5, 6]
 let maxValue = allNumbers.reduce(0) {
-    
-    if $0 > $1 {
-        return $0
-    }
-    else {
-        return $1
-    }
+    return $0 > $1 : $0 : $1
 }
 maxValue
 
