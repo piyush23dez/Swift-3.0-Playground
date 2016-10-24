@@ -474,7 +474,7 @@ func read(fileName: String) {
     let filePath = dir.appendingPathComponent(fileName)       
     
     do {
-      let data = FileManager.default.contents(atPath: filePath)
+      let data = FileManager.default.contents(atPath: "\(path)")
       let dict = try JSONSerialization.jsonObject(with: data!)
     }
     catch let error {
@@ -482,13 +482,13 @@ func read(fileName: String) {
     }
 }
 
-func write(data: Dictionary, fileName: String) {
+func write(data: Data, fileName: String) {
     
     let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
     let filePath = dir.appendingPathComponent(fileName)
     
     do {
-        try? data.write(to: filePath, automatically: true, encoding: String.encoding.utf8)
+        try dataDic.write(to: path!)
     }
     catch let error {
         print(error)
@@ -507,18 +507,6 @@ func copy(serverUrl: URL) {
    }
 }
 
-/*---------------------------------------------------*/
-
-
-//Swift – Json serialization
-
-func getJson() -> [String : Any] {
- let jsonString = "some json string from server"
- 
- let data = jsonString.data(using: .utf8)!
- let json = try ? JSONSerialization.jsonObject(with: data)
- return json
-}
 
 /*---------------------------------------------------------------*/
 
