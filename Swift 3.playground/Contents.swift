@@ -198,9 +198,9 @@ func makeIterator(start: Int, step: Int) -> () -> Int {
     
     //closure takes no parameter, return value is an Int
     let incrementer: () -> Int = {
-        let currentValue = index
+        let temp = index
         index += step
-        return currentValue
+        return temp
     }
     return incrementer
 }
