@@ -468,19 +468,19 @@ do {
 
 //Read, write and copy files
 
-func read(fileName: String) {
-    
-    let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-    let filePath = dir.appendingPathComponent(fileName)       
-    
-    do {
-      let data = FileManager.default.contents(atPath: "\(path)")
-      let dict = try JSONSerialization.jsonObject(with: data!)
-    }
-    catch let error {
-     print(error)
-    }
-}
+ func read(fileName: String) {
+        
+        let bundle = Bundle(for: type(of: self))
+        if let theURL = bundle.url(forResource: fileName, withExtension: "json") {
+            do {
+                let data = try Data(contentsOf: theURL)
+                if let myData = try? JSONSerialization.jsonObject(with: data) as! [String:Any] {
+                }
+            } catch {
+                print(error)
+            }
+        }
+ }
 
 func write(data: Data, fileName: String) {
     
